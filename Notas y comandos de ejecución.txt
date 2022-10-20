@@ -1,0 +1,16 @@
+#Challenge 18 de octubre NodeJs
+
+aws ec2 run-instances --image-id ami-08c40ec9ead489470 --instance-type t3.medium --key-name bootcamp-desafio-1-fase2 --security-group-ids sg-02a431d4eaf15e827 --count 1 --tag-specifications 'ResourceType=instance, Tags=[{Key=Name,Value=bootcamp-ubuntu-node}]' --profile bootcamp-devops --region us-east-1 --user-data file://user-data--script-ubuntu-challenge.txt
+
+#Desafío fase1 Instalar Mysql 8 con en dos instancias EC2 de Amazon
+
+- Amazon linux ami
+
+aws ec2 run-instances --image-id ami-026b57f3c383c2eec --instance-type t3.medium --key-name bootcamp-desafio-1-fase2 --security-group-ids sg-05828a8e15667bdf8 --count 1 --tag-specifications 'ResourceType=instance, Tags=[{Key=Name,Value=bootcamp-ec2-instance-AmzLinux}]' --region us-east-1 --user-data file://user-data--script-amzlinux.txt --profile bootcamp-devops
+
+- Ubuntu linux ami
+
+
+aws ec2 run-instances --image-id ami-08c40ec9ead489470 --instance-type t3.medium --key-name bootcamp-desafio-1-fase2 --security-group-ids sg-05828a8e15667bdf8 --count 1 --tag-specifications 'ResourceType=instance, Tags=[{Key=Name,Value=bootcamp-ec2-instance-ubuntu}]' --region us-east-1 --user-data file://user-data--script-ubuntu.txt --profile bootcamp-devops
+
+

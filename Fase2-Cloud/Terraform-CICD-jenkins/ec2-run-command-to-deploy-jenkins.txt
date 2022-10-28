@@ -1,0 +1,3 @@
+aws ec2 run-instances --image-id ami-08c40ec9ead489470 --instance-type t3.medium --key-name bootcamp-desafio-2-fase2 --security-group-ids sg-0cbb25288f37ea013 --count 1 --tag-specifications 'ResourceType=instance, Tags=[{Key=Name,Value=bootcamp-JENKINS}]' --region us-east-1 --user-data file://user-data-jenkins.install.txt --profile bootcamp-devops
+
+NOTA: Debemos crear el sg con permisos (80,8080,443,22) y el key pair de aws.

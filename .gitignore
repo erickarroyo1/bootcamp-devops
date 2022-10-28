@@ -7,7 +7,8 @@ __pycache__/
 *.so
 
 # securuty ssh keys
-
+*.ppk
+*.pem
 ssh-security-keys
 ssh-security-keys.pub
 

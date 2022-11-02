@@ -1,21 +1,14 @@
 locals {
-  s3_origin_id = "myS3Origin"
+  s3_origin_id = "s3-static-webpage.com"
 }
 
-
 resource "aws_cloudfront_origin_access_control" "oac" {
-  name                              = "oac-cloudfront"
-  description                       = ""
+  name                              = "exaoacmple"
+  description                       = "oac Policy"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
   provider                          = aws.bootcamp-tlz-account
-}
-
-
-resource "aws_cloudfront_origin_access_identity" "s3_origin_access" {
-  comment  = "CloudFront S3 Distribution"
-  provider = aws.bootcamp-tlz-account
 }
 
 
@@ -24,26 +17,23 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     domain_name              = aws_s3_bucket.this_s3_bucket.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
     origin_id                = local.s3_origin_id
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.s3_origin_access.cloudfront_access_identity_path
-    }
+
   }
-
-
 
   enabled             = true
   is_ipv6_enabled     = true
-  comment             = "Some comment"
+  comment             = "my-cloudfront"
   default_root_object = "index.html"
 
-  aliases = ["52.208.34.204.sslip.ip", "52.208.34.205.sslip.ip"]
+  # Configure logging here if required 	
+  #logging_config {
+  #  include_cookies = false
+  #  bucket          = "mylogs.s3.amazonaws.com"
+  #  prefix          = "myprefix"
+  #}
 
-  restrictions {
-    geo_restriction {
-      restriction_type = "whitelist"
-      locations        = ["CA", "GB", "DE"]
-    }
-  }
+  # If you have domain configured use it here 
+  #aliases = ["mywebsite.example.com", "s3-static-web-dev.example.com"]
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
@@ -64,52 +54,60 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     max_ttl                = 86400
   }
 
-  # Cache behavior with precedence 0
-  ordered_cache_behavior {
-    path_pattern     = "/content/immutable/*"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = local.s3_origin_id
+#   # Cache behavior with precedence 0
+#   ordered_cache_behavior {
+#     path_pattern     = "/content/immutable/*"
+#     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+#     cached_methods   = ["GET", "HEAD", "OPTIONS"]
+#     target_origin_id = local.s3_origin_id
 
-    forwarded_values {
-      query_string = false
-      headers      = ["Origin"]
+#     forwarded_values {
+#       query_string = false
+#       headers      = ["Origin"]
 
-      cookies {
-        forward = "none"
-      }
+#       cookies {
+#         forward = "none"
+#       }
+#     }
+
+#     min_ttl                = 0
+#     default_ttl            = 86400
+#     max_ttl                = 31536000
+#     compress               = true
+#     viewer_protocol_policy = "redirect-to-https"
+#   }
+
+#   # Cache behavior with precedence 1
+#   ordered_cache_behavior {
+#     path_pattern     = "/content/*"
+#     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+#     cached_methods   = ["GET", "HEAD"]
+#     target_origin_id = local.s3_origin_id
+
+#     forwarded_values {
+#       query_string = false
+
+#       cookies {
+#         forward = "none"
+#       }
+#     }
+
+#     min_ttl                = 0
+#     default_ttl            = 3600
+#     max_ttl                = 86400
+#     compress               = true
+#     viewer_protocol_policy = "redirect-to-https"
+#   }
+
+#   price_class = "PriceClass_200"
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "blacklist"
+      locations        = ["IN"]
     }
-
-    min_ttl                = 0
-    default_ttl            = 86400
-    max_ttl                = 31536000
-    compress               = true
-    viewer_protocol_policy = "redirect-to-https"
   }
 
-  # Cache behavior with precedence 1
-  ordered_cache_behavior {
-    path_pattern     = "/content/*"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.s3_origin_id
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
-    compress               = true
-    viewer_protocol_policy = "redirect-to-https"
-  }
-
-  price_class = "PriceClass_200"
 
   tags = {
     Name      = "CloudFrontDistribution-bootcamp"
@@ -117,8 +115,17 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     Owner     = "Erick Arroyo - Cybersecurity"
   }
 
+
   viewer_certificate {
     cloudfront_default_certificate = true
   }
   provider = aws.bootcamp-tlz-account
 }
+
+
+
+
+
+
+
+

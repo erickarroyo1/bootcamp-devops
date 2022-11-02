@@ -24,34 +24,6 @@ resource "aws_s3_bucket_versioning" "tf-security-s3-versioning" {
   provider = aws.bootcamp-tlz-account
 }
 
-#kms key for bucket encryption
-
-resource "aws_kms_key" "tf-security-key" {
-  description             = "This key is used to encrypt bucket objects"
-  deletion_window_in_days = 10
-  tags = {
-    Name      = "kms-bootcamp-testing-2022"
-    Terraform = "True"
-    Owner     = "Erick Arroyo - Cybersecurity"
-  }
-  #define provider
-  provider = aws.bootcamp-tlz-account
-}
-
-resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
-  bucket = aws_s3_bucket.this_s3_bucket.bucket
-
-  rule {
-    apply_server_side_encryption_by_default {
-      kms_master_key_id = aws_kms_key.tf-security-key.arn
-      sse_algorithm     = "aws:kms"
-    }
-  }
-  #define provider
-  provider = aws.bootcamp-tlz-account
-}
-
-
 #S3 Bucket ACL
 
 resource "aws_s3_bucket_acl" "b_acl" {
@@ -60,35 +32,41 @@ resource "aws_s3_bucket_acl" "b_acl" {
   provider = aws.bootcamp-tlz-account
 }
 
+data "aws_iam_policy_document" "s3_policy" {
+  version = "2008-10-17"
 
-#S3 bucket Policy
-
-data "aws_iam_policy_document" "s3_bucket_policy" {
   statement {
-    sid = "1"
-
-    actions = [
-      "s3:GetObject",
-    ]
-
-    resources = [
-      "arn:aws:s3:::${var.bucket-name}/*",
-    ]
+    sid       = "AllowCloudFrontServicePrincipal"
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.this_s3_bucket.arn}/*"]
 
     principals {
-      type = "AWS"
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
 
-      identifiers = [
-        aws_cloudfront_origin_access_identity.s3_origin_access.iam_arn,
-      ]
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = ["${aws_cloudfront_distribution.s3_distribution.arn}"]
     }
   }
   provider = aws.bootcamp-tlz-account
 }
 
-resource "aws_s3_bucket_policy" "s3_bucket_policy" {
+resource "aws_s3_bucket_policy" "mybucket" {
   bucket   = aws_s3_bucket.this_s3_bucket.id
-  policy   = data.aws_iam_policy_document.s3_bucket_policy.json
+  policy   = data.aws_iam_policy_document.s3_policy.json
+  provider = aws.bootcamp-tlz-account
+}
+
+resource "aws_s3_bucket_public_access_block" "mybucket" {
+  bucket = aws_s3_bucket.this_s3_bucket.id
+
+  block_public_acls   = true
+  block_public_policy = true
+  //ignore_public_acls      = true
+  //restrict_public_buckets = true
   provider = aws.bootcamp-tlz-account
 }
 

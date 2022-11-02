@@ -22,7 +22,9 @@ pipeline {
         }       
         stage('Upload to S3') {
             steps {
-                sh 'aws s3 cp Fase2-Cloud/Terraform-CICD-jenkins/static-website s3://bootcamp-s3-testing-2022-erick --recursive'
+                 withAWS(credentials: 'aws_tlz_account', region: 'us-west-1') {
+                    sh 'aws s3 cp Fase2-Cloud/Terraform-CICD-jenkins/static-website s3://bootcamp-s3-testing-2022-erick --recursive'
+                 }
             }
         }   
     }

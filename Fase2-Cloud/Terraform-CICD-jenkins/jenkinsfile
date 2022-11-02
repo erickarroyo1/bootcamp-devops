@@ -5,12 +5,16 @@ pipeline {
         stage('AWS VALIDATE') {
             steps {
                 echo 'AWS STS'
-                sh 'aws sts get-caller-identity'
+                withAWS(credentials: 'aws_tlz_account', region: 'eu-west-1') {
+                    sh 'aws sts get-caller-identity'
+                }                
             }
         }
         stage('AWS S3 listar') {
             steps {
-                sh 'aws s3 ls'
+                withAWS(credentials: 'aws_tlz_account', region: 'eu-west-1'){
+                    sh 'aws s3 ls'
+                }                
             }
         } 
         stage('Git Clone') {

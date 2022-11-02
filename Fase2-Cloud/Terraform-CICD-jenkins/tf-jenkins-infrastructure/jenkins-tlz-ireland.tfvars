@@ -1,0 +1,17 @@
+region = "eu-west-1"
+
+
+profile                     = "Test-LandindZone"
+az1                         = "eu-west-1a"
+az2                         = "eu-west-1b"
+keyname                     = "ssh-security-key"
+pathpublickey               = "/mnt/c/Users/ErickArroyo/Bootcamp-DevOps/Fase2-Cloud/Terraform-CICD-jenkins/tf-jenkins-infrastructure/ssh-security-keys.pub"
+size                        = "t3.large"
+vpc-security-cidr           = "172.22.0.0/16"
+security-vpc-subnet-public1 = "172.22.10.0/24"
+security-vpc-subnet-public2 = "172.22.11.0/24"
+bootstrap-jenkins           = "../user-data-jenkins.install.txt"
+bucket-name                 = "bootcamp-s3-testing-2022-erick"
+kms-name                    = "bootcamp-kms-testing-2022-erick"
+domain_name                 = "52.208.34.204.sslip.ip"
+

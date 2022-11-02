@@ -49,9 +49,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     }
 
     viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
+    min_ttl                = 1
+    default_ttl            = 50
+    max_ttl                = 100
   }
 
 #   # Cache behavior with precedence 0

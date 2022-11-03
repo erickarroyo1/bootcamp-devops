@@ -62,6 +62,8 @@ variable "ubuntu" {
 variable "pathpublickey" {}
 
 
+
+
 variable "size" {}
 
 //  Existing SSH Key on the AWS 
@@ -77,6 +79,4 @@ variable "bootstrap-jenkins" {}
 variable "bucket-name" {}
 variable "kms-name" {}
 
-variable "domain_name" {
-  description = "domain name (or application name if no domain name available)"
-}
+

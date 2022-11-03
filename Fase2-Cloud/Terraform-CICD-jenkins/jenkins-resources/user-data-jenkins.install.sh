@@ -1,8 +1,9 @@
 #!/bin/bash
+
 DOMAIN=$(curl icanhazip.com)
 SSLIP="$DOMAIN.sslip.io"
 sudo apt update -y
-sudo apt install -y wget unzip nginx
+sudo apt install -y wget unzip nginx openjdk-11-jdk java-1.8.0-openjdk-devel python
 sudo systemctl start nginx
 sudo mkdir -p /var/www/jenkins/html
 sudo chown -R $USER:$USER /var/www/jenkins/html
@@ -24,7 +25,7 @@ EOF
 sudo mv jenkins /etc/nginx/sites-available/
 sudo ln -s /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/
 sudo systemctl restart nginx
-sudo apt install -y certbot python3-certbot-nginx
+sudo apt install -y certbot python3-certbot-nginx unzip
 sudo certbot --nginx --register-unsafely-without-email --agree-tos -d "${SSLIP}" --cert-name jenkins
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
@@ -35,3 +36,5 @@ sudo apt update -y
 sudo apt install -y default-jre
 sudo apt install -y jenkins 
 sudo systemctl start jenkins.service
+
+

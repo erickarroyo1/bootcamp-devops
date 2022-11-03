@@ -15,7 +15,15 @@ resource "aws_security_group" "public_allow" {
     from_port   = 443
     to_port     = 443
     protocol    = "6"
-    cidr_blocks = ["186.31.174.42/32"]
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "traffic from security administrators"
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "6"
+    cidr_blocks = ["0.0.0.0/0"]
     description = "traffic from security administrators"
   }
 
@@ -23,7 +31,7 @@ resource "aws_security_group" "public_allow" {
     from_port   = 8080
     to_port     = 8080
     protocol    = "6"
-    cidr_blocks = ["186.31.174.42/32"]
+    cidr_blocks = ["0.0.0.0/0"]
     description = "traffic from security administrators"
   }
 
@@ -31,7 +39,7 @@ resource "aws_security_group" "public_allow" {
     from_port   = -1
     to_port     = -1
     protocol    = "icmp"
-    cidr_blocks = ["186.31.174.42/32"]
+    cidr_blocks = ["0.0.0.0/0"]
     description = "traffic from security administrators"
   }
 

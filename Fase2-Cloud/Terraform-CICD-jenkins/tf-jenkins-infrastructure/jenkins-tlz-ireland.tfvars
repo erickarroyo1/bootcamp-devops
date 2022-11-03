@@ -10,8 +10,8 @@ size                        = "t3.large"
 vpc-security-cidr           = "172.22.0.0/16"
 security-vpc-subnet-public1 = "172.22.10.0/24"
 security-vpc-subnet-public2 = "172.22.11.0/24"
-bootstrap-jenkins           = "../jenkins-resources/user-data-jenkins.install.txt"
+bootstrap-jenkins           = "../jenkins-resources/user-data-jenkins.install.sh"
 bucket-name                 = "bootcamp-s3-testing-2022-erick"
 kms-name                    = "bootcamp-kms-testing-2022-erick"
-domain_name                 = "52.208.34.204.sslip.ip"
+
 

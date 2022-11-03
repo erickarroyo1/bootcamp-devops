@@ -19,6 +19,7 @@ resource "aws_network_interface_sg_attachment" "publicattachment" {
   provider = aws.bootcamp-tlz-account
 }
 
+
 // Instance Jenkins-Bootcamp
 
 
@@ -58,9 +59,9 @@ resource "aws_instance" "jenkins" {
 // EIP to jenkins 
 
 resource "aws_eip" "jenkinsPublicIp" {
-  depends_on        = [aws_instance.jenkins]
-  vpc               = true
-  network_interface = aws_network_interface.fgt1-eth0.id
+  depends_on = [aws_instance.jenkins]
+  vpc        = true
+  instance   = aws_instance.jenkins.id
   #define provider
   provider = aws.bootcamp-tlz-account
   tags = {
@@ -69,3 +70,44 @@ resource "aws_eip" "jenkinsPublicIp" {
     Owner     = "Erick Arroyo - Cybersecurity"
   }
 }
+
+#Resource Provision Exec to insert final configuration to jenkins
+
+# resource "null_resource" "provisioner" {
+#   count = "1"
+#   depends_on        = [aws_instance.jenkins]
+
+#   connection {
+#     host        = aws_eip.jenkinsPublicIp.public_ip
+#     type        = "ssh"
+#     user        = "ubuntu"
+#     private_key = "${file("/mnt/c/Users/ErickArroyo/Bootcamp-DevOps/Fase2-Cloud/Terraform-CICD-jenkins/tf-jenkins-infrastructure/ssh-security-keys")}"
+#   }
+
+
+#   provisioner "file" {
+#     source      = "../jenkins-resources/create-jenkins-admin-user.sh"
+#     destination = "/tmp/create-jenkins-admin-user.sh"
+#   }
+
+#   provisioner "file" {
+#     source      = "../jenkins-resources/install-additional-plugins-jenkins.sh"
+#     destination = "/tmp/install-additional-plugins-jenkins.sh"
+#   }
+
+#   # change permissions and execute the scripts
+
+#   provisioner "remote-exec" {
+#     inline = [
+#       "chmod +x /tmp/create-jenkins-admin-user.sh",
+#       "chmod +x /tmp/install-additional-plugins-jenkins.sh",
+#       "/tmp/create-jenkins-admin-user.sh",
+#       "/tmp/install-additional-plugins-jenkins.sh"
+
+#     ]
+#   }
+
+
+
+#   provider = null
+# }

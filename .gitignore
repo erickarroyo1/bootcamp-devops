@@ -144,6 +144,10 @@ dmypy.json
 *.tfstate
 *.tfstate.*
 
+#State Files 
+
+state.tf
+
 # Crash log files
 crash.log
 

@@ -34,7 +34,9 @@ pipeline {
             steps {
                  withAWS(credentials: 'aws_tlz_account', region: 'eu-west-1') {
                     sh 'rm -rf bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources/function.zip'
-                    sh 'zip function.zip bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources/function.py'
+                    sh 'ls -lrt bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources'
+                    sh 'cp bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources/function.py ./function.py'
+                    sh 'zip ./function.zip ./function.py'
                     sh 'ls -lrt bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources'
                     sh 'aws s3 cp function.zip s3://erick-code-backend-bucket'
                  }

@@ -5,6 +5,7 @@ pipeline {
         BUCKETS3="erick-code-backend-bucket"
         ZIP="function.zip"
         CODE="function.py"
+    }
 
     stages {
         stage('AWS VALIDATE ACCESS') {

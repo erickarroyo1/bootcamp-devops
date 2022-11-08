@@ -31,6 +31,24 @@ resource "aws_s3_bucket_acl" "b_acl" {
   provider = aws.bootcamp-tlz-account
 }
 
+#s3 Objects into buckets
+
+resource "aws_s3_object" "data_csv_object" {
+  bucket = aws_s3_bucket.this_s3_bucket[0].id
+  key    = "data.csv"
+  source = "../csv_demo/data.csv"
+  provider = aws.bootcamp-tlz-account
+}
+
+resource "aws_s3_object" "lambda_code_object" {
+  bucket = aws_s3_bucket.this_s3_bucket[1].id
+  key    = "lambda_function.zip"
+  source = "../lambda-python-resources/lambda_function.zip"
+  provider = aws.bootcamp-tlz-account
+}
+
+
+
 #Resource Dynamodb 
 
 resource "aws_dynamodb_table" "bootcamp_dynamodb" {
@@ -58,7 +76,7 @@ resource "aws_iam_role" "lab_role" {
   name     = "lab_role"
   provider = aws.bootcamp-tlz-account
   #this is the trusted policy into the role
-  tags = var.tagging
+  tags               = var.tagging
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -79,7 +97,7 @@ EOF
 resource "aws_iam_role_policy" "lab_role_iam_policy" {
   name     = "lab_role_iam_policy"
   role     = aws_iam_role.lab_role.id
-  provider = aws.bootcamp-tlz-account 
+  provider = aws.bootcamp-tlz-account
   #this is the inline policy into the role
   policy = <<EOF
 {
@@ -116,18 +134,20 @@ EOF
 resource "aws_lambda_function" "bootcamp_s3_dynamo_lambda" {
   # If the file is not in the current working directory you will need to include a
   # path.module in the filename.
-  depends_on    = [aws_iam_role.lab_role]
-  filename      = "../lambda-python-resources/lambda_function.zip"
+  depends_on = [aws_iam_role.lab_role, aws_s3_object.lambda_code_object]
+  s3_bucket  = aws_s3_bucket.this_s3_bucket[1].id
+  s3_key     = "lambda_function.zip"
+  #filename      = "../lambda-python-resources/lambda_function.zip"
   function_name = "educacionit_s3toDynamonCSVImport"
   role          = aws_iam_role.lab_role.arn
-  handler       = "index.test"
+  handler       = "lambda_function.lambda_handler"
 
   # The filebase64sha256() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
   # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("../lambda-python-resources/lambda_function.zip")
-  tags = var.tagging
-  runtime = "python3.9"
+  tags             = var.tagging
+  runtime          = "python3.9"
 
   # environment {
   #   variables = {
@@ -144,7 +164,7 @@ resource "aws_lambda_permission" "allow_bucket_to_invokeLambda" {
   function_name = aws_lambda_function.bootcamp_s3_dynamo_lambda.id
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.this_s3_bucket[0].arn
-  provider = aws.bootcamp-tlz-account
+  provider      = aws.bootcamp-tlz-account
 }
 
 # Adding S3 bucket as trigger to my lambda and giving the permissions

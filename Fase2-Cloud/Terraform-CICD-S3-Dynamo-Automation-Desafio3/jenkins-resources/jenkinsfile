@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment{
+        FUNCTION_NAME="educacionit_s3toDynamonCSVImport"
+        BUCKETS3="erick-code-backend-bucket"
+        ZIP="function.zip"
+        CODE="function.py"
 
     stages {
         stage('AWS VALIDATE ACCESS') {
@@ -32,6 +37,14 @@ pipeline {
                     sh 'aws s3 cp bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources/function.zip s3://erick-code-backend-bucket'
                  }
             }
-        }   
+        } 
+        stage('Deploy to Lambda') {
+            steps {
+                withAWS(credentials: 'aws_tlz_account', region: 'eu-west-1') {
+                sh 'aws lambda update-function-code --function-name $FUNCTION_NAME --s3-bucket ${BUCKETS3} --s3-key $ZIP --publish'    
+                }
+                
+            }
+        }     
     }
 }

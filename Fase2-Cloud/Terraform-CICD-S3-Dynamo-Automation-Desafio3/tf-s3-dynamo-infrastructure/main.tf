@@ -132,28 +132,15 @@ EOF
 }
 
 resource "aws_lambda_function" "bootcamp_s3_dynamo_lambda" {
-  # If the file is not in the current working directory you will need to include a
-  # path.module in the filename.
   depends_on = [aws_iam_role.lab_role, aws_s3_object.lambda_code_object]
   s3_bucket  = aws_s3_bucket.this_s3_bucket[1].id
   s3_key     = "lambda_function.zip"
-  #filename      = "../lambda-python-resources/lambda_function.zip"
   function_name = "educacionit_s3toDynamonCSVImport"
   role          = aws_iam_role.lab_role.arn
   handler       = "lambda_function.lambda_handler"
-
-  # The filebase64sha256() function is available in Terraform 0.11.12 and later
-  # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
-  # source_code_hash = "${base64sha256(file("lambda_function_payload.zip"))}"
   source_code_hash = filebase64sha256("../lambda-python-resources/lambda_function.zip")
   tags             = var.tagging
   runtime          = "python3.9"
-
-  # environment {
-  #   variables = {
-  #     foo = "bar"
-  #   }
-  # }
   provider = aws.bootcamp-tlz-account
 }
 

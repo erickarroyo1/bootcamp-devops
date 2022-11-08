@@ -42,8 +42,8 @@ resource "aws_s3_object" "data_csv_object" {
 
 resource "aws_s3_object" "lambda_code_object" {
   bucket = aws_s3_bucket.this_s3_bucket[1].id
-  key    = "lambda_function.zip"
-  source = "../lambda-python-resources/lambda_function.zip"
+  key    = "function.zip"
+  source = "../lambda-python-resources/function.zip"
   provider = aws.bootcamp-tlz-account
 }
 
@@ -134,11 +134,11 @@ EOF
 resource "aws_lambda_function" "bootcamp_s3_dynamo_lambda" {
   depends_on = [aws_iam_role.lab_role, aws_s3_object.lambda_code_object]
   s3_bucket  = aws_s3_bucket.this_s3_bucket[1].id
-  s3_key     = "lambda_function.zip"
+  s3_key     = "function.zip"
   function_name = "educacionit_s3toDynamonCSVImport"
   role          = aws_iam_role.lab_role.arn
   handler       = "lambda_function.lambda_handler"
-  source_code_hash = filebase64sha256("../lambda-python-resources/lambda_function.zip")
+  source_code_hash = filebase64sha256("../lambda-python-resources/function.zip")
   tags             = var.tagging
   runtime          = "python3.9"
   provider = aws.bootcamp-tlz-account

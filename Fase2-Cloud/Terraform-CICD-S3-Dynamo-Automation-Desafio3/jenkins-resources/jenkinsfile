@@ -5,6 +5,7 @@ pipeline {
         BUCKETS3="erick-code-backend-bucket"
         ZIP="function.zip"
         CODE="function.py"
+    }
 
     stages {
         stage('AWS VALIDATE ACCESS') {
@@ -43,8 +44,8 @@ pipeline {
                 withAWS(credentials: 'aws_tlz_account', region: 'eu-west-1') {
                 sh 'aws lambda update-function-code --function-name $FUNCTION_NAME --s3-bucket ${BUCKETS3} --s3-key $ZIP --publish'    
                 }
+            }
                 
             }
         }     
     }
-}

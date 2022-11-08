@@ -21,4 +21,4 @@ def lambda_handler(event, context):
         })
     return 'success'
 
-    #python 3.9 success 08/11/2022
+    #python 3.9 success 08/11/2022 working all

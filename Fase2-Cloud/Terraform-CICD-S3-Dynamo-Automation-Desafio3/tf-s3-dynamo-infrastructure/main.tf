@@ -137,7 +137,7 @@ resource "aws_lambda_function" "bootcamp_s3_dynamo_lambda" {
   s3_key     = "function.zip"
   function_name = "educacionit_s3toDynamonCSVImport"
   role          = aws_iam_role.lab_role.arn
-  handler       = "lambda_function.lambda_handler"
+  handler       = "function.lambda_handler"
   source_code_hash = filebase64sha256("../lambda-python-resources/function.zip")
   tags             = var.tagging
   runtime          = "python3.9"

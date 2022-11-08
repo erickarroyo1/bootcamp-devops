@@ -3,7 +3,7 @@
 DOMAIN=$(curl icanhazip.com)
 SSLIP="$DOMAIN.sslip.io"
 sudo apt update -y
-sudo apt install -y wget unzip nginx openjdk-11-jdk java-1.8.0-openjdk-devel python
+sudo apt install -y wget unzip zip nginx openjdk-11-jdk java-1.8.0-openjdk-devel python
 sudo systemctl start nginx
 sudo mkdir -p /var/www/jenkins/html
 sudo chown -R $USER:$USER /var/www/jenkins/html

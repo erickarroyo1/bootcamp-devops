@@ -36,6 +36,7 @@ pipeline {
                     sh 'rm -rf bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources/function.zip'
                     sh 'ls -lrt bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources'
                     sh 'cp bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources/function.py ./function.py'
+                    sh 'pwd'
                     sh 'zip ./function.zip ./function.py'
                     sh 'ls -lrt bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources'
                     sh 'aws s3 cp ./function.zip s3://erick-code-backend-bucket'

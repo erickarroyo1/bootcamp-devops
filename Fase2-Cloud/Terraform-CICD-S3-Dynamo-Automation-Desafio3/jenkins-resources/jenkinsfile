@@ -28,7 +28,7 @@ pipeline {
             steps {
                  withAWS(credentials: 'aws_tlz_account', region: 'eu-west-1') {
                     sh 'cd Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources'
-                    sh 'zip function.zip lambda_function.py -y'
+                    sh 'zip function.zip function.py -y'
                     sh 'aws s3 cp Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources/function.zip s3://erick-code-backend-bucket --recursive'
                  }
             }

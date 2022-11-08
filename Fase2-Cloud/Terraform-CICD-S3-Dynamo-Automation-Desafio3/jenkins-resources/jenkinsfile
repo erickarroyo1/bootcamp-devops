@@ -21,15 +21,15 @@ pipeline {
             steps {
                 sh 'rm -rf bootcamp-devops'
                 sh 'git clone https://github.com/erickarroyo1/bootcamp-devops.git'
-                sh 'ls -lrt Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources'
+                sh 'ls -lrt bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources'
             }
         }       
         stage('Upload to S3') {
             steps {
                  withAWS(credentials: 'aws_tlz_account', region: 'eu-west-1') {
-                    sh 'cd Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources'
+                    sh 'cd bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources'
                     sh 'zip function.zip function.py -y'
-                    sh 'aws s3 cp Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources/function.zip s3://erick-code-backend-bucket --recursive'
+                    sh 'aws s3 cp bootcamp-devops/Fase2-Cloud/Terraform-CICD-S3-Dynamo-Automation-Desafio3/lambda-python-resources/function.zip s3://erick-code-backend-bucket --recursive'
                  }
             }
         }   

@@ -5,4 +5,4 @@
 - Ejecuta dentro del contenedor la acción ls, para comprobar que los archivos se han copiado correctamente.
 - Hacer que el servidor web sea accesible desde el puerto 9999 de tu local.
 
-# 3. NOTA: el dockerfile se utiliza para crear la imágen como la necesitemos
+# 3. Nota: el dockerfile se utiliza para crear la imágen como la necesitemos

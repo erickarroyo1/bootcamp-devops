@@ -6,3 +6,7 @@
 - Hacer que el servidor web sea accesible desde el puerto 9999 de tu local.
 
 # 3. Nota: el dockerfile se utiliza para crear la imágen como la necesitemos
+
+# 4. Evidencias:
+
+![docker en ejecución](./03-docker-running.png?raw=true "docker en ejecución")

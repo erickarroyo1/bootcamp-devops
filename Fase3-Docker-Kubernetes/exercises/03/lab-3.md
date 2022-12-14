@@ -10,3 +10,6 @@
 # 4. Evidencias:
 
 ![docker en ejecución](./03-docker-running.png?raw=true "docker en ejecución")
+![puerto 9999 en escucha](./03-puertos-en-escucha.png?raw=true "puerto 9999 en escucha")
+![archivos dentro del contenedor](./03-ls.png?raw=true "archivos dentro del contenedor")
+![web running](./03-web-running.png?raw=true "web running")

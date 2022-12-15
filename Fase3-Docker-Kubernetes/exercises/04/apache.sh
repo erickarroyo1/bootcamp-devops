@@ -21,7 +21,7 @@ docker inspect myapache
 #Validar el historico del contenedor
 
 echo -e '\n--Historial del contenedor--\n\n'
-docker history myapache
+docker history apache:erick-0.0.1
 
 
 #listar los contenedores en ejecución

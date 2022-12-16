@@ -1,3 +1,51 @@
+## Entregable:
+
+1. Creación de una imágen de docker
+```
+   docker build -t nodeapp:erick-0.0.1 .
+```
+
+2. Ejecutar un docker con una app de nodejs insertando una variable MESSAGE en el momento de la ejecución
+```
+  docker run -d -e MESSAGE=hello -p 8080:8080 --name mynodeapp nodeapp:erick-0.0.1
+```
+
+  ![docker en ejecución](./Documentation/05-docker-running-with-variable.png?raw=true " docker en ejecución ")
+
+
+3. ejecutar docker exec para generar un archivo con el comando tocuh e ingresar al contenedor para listarlo.
+```
+  docker exec -it mynodeapp touch example.txt
+  docker exec -it mynodeapp sh
+  ls
+```
+  ![docker exec with touch](./Documentation/05-docker-exec-it-touch.png?raw=true " docker exec with touch ")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## DATOS para ejecutar el ejercicio.
+
 ## ENV Variables
 
 Vamos a crear una nueva aplicación tonta de NodeJS

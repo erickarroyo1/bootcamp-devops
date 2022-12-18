@@ -25,7 +25,7 @@ docker image inspect apache:erick-0.0.1 -f '{{.RootFS.Layers}}' #muestra las cap
 
 ss -lnpt #visualizar el puerto en escucha.
 
-![ss -lnpt](./Documentation/04-puerto-5050-en-20escucha.png?raw=true " inspección de la imágen del contenedor ")
+![ss -lnpt](./Documentation/04-puerto-5050-en-escucha.png?raw=true " inspección de la imágen del contenedor ")
 # 4. Evidencias:
 
 ![web running](./Documentation/04-web-apache-running.png?raw=true " web running ")

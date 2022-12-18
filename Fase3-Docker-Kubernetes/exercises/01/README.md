@@ -18,3 +18,21 @@ Paso por paso como ejecutar un par de contenedores de `MySQL` y de `PHPMyAdmin` 
    1. Podrás ver tu contenedor de `PHPMyAdmin` corriendo desde <http://localhost:82/>
    2. Una vez ahí introduce las credenciales correctas para acceder y comenzar a jugar con tus contenedores
 3. Una vez que hayas jugado un poco con los contenedores, asegúrate de detenerlos y borrarlos utilizando `docker stop` para detenerlos, y `docker rm` para removerlos
+
+
+## ENTREGABLE
+
+crear un script que descargue una imágen de nginx en una versión específica y deja el github donde se encuentra el código
+
+1. Docker en ejecución
+
+![docker running ](./Doc/01-docker-running.png?raw=true " docker running ")
+
+Paso por paso cómo ejecutar un par de contenedores de `MySQL` y de `PHPMyAdmin` que estén conectados entre sí.
+
+2. PHPMyadmin running
+
+
+![PHPMyadmin running ](./Doc/01-phpadmin-running.pnggit?raw=true " PHPMyadmin running ")
+
+

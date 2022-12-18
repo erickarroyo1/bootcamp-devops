@@ -52,6 +52,15 @@ Response OK!!!
 
 ![docker images](./Doc/06-docker-images.png?raw=true " docker images ")
 
+
+
+```
+docker run -d -p  8000:8000 --name app-python app-python:erick-0.0.1
+docker run -it -e LOCAL=true consumer-python:erick-0.0.1
+```
+
+
+
 ![docker app running](./Doc/06-dockerApp-running.png?raw=true " docker app running ")
 
 ![06-dockerConsumer-running-consuming-dockerApp](./Doc/06-dockerConsumer-running-consuming-dockerApp.png?raw=true " 06-dockerConsumer-running-consuming-dockerApp ")

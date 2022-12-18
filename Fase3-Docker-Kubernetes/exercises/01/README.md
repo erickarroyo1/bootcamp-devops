@@ -33,6 +33,6 @@ Paso por paso cómo ejecutar un par de contenedores de `MySQL` y de `PHPMyAdmin`
 2. PHPMyadmin running
 
 
-![PHPMyadmin running ](./Doc/01-phpadmin-running.pnggit?raw=true " PHPMyadmin running ")
+![PHPMyadmin running ](./Doc/01-phpadmin-running.png?raw=true " PHPMyadmin running ")
 
 

@@ -29,7 +29,7 @@ CMD [ "node", "server.js" ]
 docker build -t node-app2:excercise-08 . 
 
 ```
-![08-docker-build](../Doc/08-docker-build.png?raw=true " 08-docker-build ")
+![08-docker-build](./Doc/08-docker-build.png?raw=true " 08-docker-build ")
 
 1. Inicializamos el docker "docker run", mostramos los contenedores en ejecución "docker ps" y probamos "curl localhost:3500"
 
@@ -40,6 +40,6 @@ curl localhost:3500
 
 ```
 
-![08-docker-running-and-test](../Doc/08-docker-running-and-test.png?raw=true " 08-docker-running-and-test ")
+![08-docker-running-and-test](./Doc/08-docker-running-and-test.png?raw=true " 08-docker-running-and-test ")
 
 

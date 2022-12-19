@@ -31,7 +31,7 @@ docker build -t node-app2:excercise-08 .
 ```
 ![08-docker-build](./Doc/08-docker-build.png?raw=true " 08-docker-build ")
 
-1. Inicializamos el docker "docker run", mostramos los contenedores en ejecución "docker ps" y probamos "curl localhost:3500"
+2. Inicializamos el docker "docker run", mostramos los contenedores en ejecución "docker ps" y probamos "curl localhost:3500"
 
 ```
 docker run -d -p 3500:3000 --name nodeapp-excercise-08 node-app2:excercise-08

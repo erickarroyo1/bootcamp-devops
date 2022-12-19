@@ -1,0 +1,9 @@
+# Cada servicio declarado corresponde a un contenedor
+# docker run -d -p 5000:5000 --name 09-pokeapi pokeapi:0.0.1 
+version: '1'
+services:
+  pokeapi:
+    container_name: 09-poke-api
+    ports:
+      - "5000:5000"
+    image: 191006/pokeapi:0.0.1

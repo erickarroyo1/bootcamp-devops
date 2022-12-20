@@ -63,9 +63,11 @@ docker push username_dockerhub/nodeweb:1.0.0
 2. ./docker.sh build node-script-app
 
 ![docker-build](./Doc/10-docker-build.png?raw=true " docker-build ")
+
+3. ./docker.sh push node-script-app
+
 ![docker-pushed](./Doc/10-docker-push.png?raw=true " docker-pushed ")
 
-
-1. ./docker.sh test node-script-app && docker ps && curl localhost:3000
+4. ./docker.sh test node-script-app && docker ps && curl localhost:3000
 
 ![./docker.sh test node-script-app && docker ps && curl localhost:3000](./Doc/10-docker-test.png?raw=true " ./docker.sh test node-script-app && docker ps && curl localhost:3000 ")

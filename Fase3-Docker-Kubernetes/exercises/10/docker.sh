@@ -4,7 +4,7 @@
 
 VERSION=`jq -r '.version' ./package.json`
 IMAGE_NAME=$2
-REGISTRY=roxsross12
+REGISTRY=191006
 APP_PORT=4000
 TEST_PORT=3000
 
@@ -16,7 +16,7 @@ function help() {
   echo -e "\033[1;36mOptions:
   build : run build only
   push: pushes the images to Docker hub
-  run: test images version
+  test: test images version
   help: prints this menu
   "
 }

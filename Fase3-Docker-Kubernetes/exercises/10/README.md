@@ -1,4 +1,5 @@
-# 10
+# Ejercicio 10, crear un script en bash de tipo menú que permita ejecutar acciones para docker.
+
 
 ## Comprobamos las imágenes y los contenedores.
 
@@ -53,9 +54,18 @@ docker tag nodeweb:1.0.0 username_dockerhub/nodeweb:1.0.0
 docker push username_dockerhub/nodeweb:1.0.0
 ```
 
-## Salida al ejecutar script.sh.
+## Salida al ejecutar script.sh. (EVIDENCIAS)
 
-```bash
-$ chmod +x 10/script.sh
-$ ./10/script.sh
-```
+1. ./docker.sh
+
+![docker-help-sript](./Doc/10-docker-help-script-menu.png?raw=true " docker-help-sript ")
+
+2. ./docker.sh build node-script-app
+
+![docker-build](./Doc/10-docker-build.png?raw=true " docker-build ")
+![docker-pushed](./Doc/10-docker-push.png?raw=true " docker-pushed ")
+
+
+1. ./docker.sh test node-script-app && docker ps && curl localhost:3000
+
+![./docker.sh test node-script-app && docker ps && curl localhost:3000](./Doc/10-docker-test.png?raw=true " ./docker.sh test node-script-app && docker ps && curl localhost:3000 ")

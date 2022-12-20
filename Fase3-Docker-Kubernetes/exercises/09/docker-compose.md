@@ -26,6 +26,8 @@ docker-compose down
 
 ## Referencia: https://docs.docker.com/compose/compose-file/
 
+
+
 The example application is composed of the following parts:
 
 2 services, backed by Docker images: webapp and database
@@ -34,7 +36,8 @@ The example application is composed of the following parts:
 1 persistent volume, attached to the backend
 2 networks
 
-´´´
+```
+
 services:
   frontend:
     image: awesome/webapp
@@ -74,7 +77,7 @@ networks:
   front-tier: {}
   back-tier: {}
 
-´´´
+```
 
 ## Referencia de comandos docker-compose 
 

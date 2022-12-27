@@ -45,6 +45,22 @@ kubectl config use-context developer
 
   ![Challenge-1-completado](./Doc/challenge1-completed.png?raw=true " Challenge-1-completado ")
 
+### Ejecución con script
+
+```  
+
+git clone https://github.com/erickarroyo1/bootcamp-devops.git
+cd Desafio-kodekloud/challenge-1 
+chmod +x ./challenge1.sh
+./challenge1.sh
+
+
+``` 
+
+  ![Ejecución con script completado](./Doc/Ejeccion_script_challenge01.png?raw=true " Ejecución con script completado ")
+
+
+
 
 
      

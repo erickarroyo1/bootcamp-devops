@@ -50,7 +50,7 @@ kubectl config use-context developer
 ```  
 
 git clone https://github.com/erickarroyo1/bootcamp-devops.git
-cd Desafio-kodekloud/challenge-1 
+cd bootcamp-devops/Desafio-kodekloud/challenge-1 
 chmod +x ./challenge1.sh
 ./challenge1.sh
 

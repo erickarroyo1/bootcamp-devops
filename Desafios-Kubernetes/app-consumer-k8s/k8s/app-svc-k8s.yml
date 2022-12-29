@@ -1,0 +1,45 @@
+--- #Deployment APP
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-k8s
+  namespace: development
+  labels:
+    app: app-k8s
+spec:
+  revisionHistoryLimit: 5 #default 10
+  strategy:
+    type: RollingUpdate #default Recreate
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-k8s
+  template:
+    metadata:
+      labels:
+        app: app-k8s
+    spec:
+      containers:
+      - name: app-k8s
+        image: 191006/app-consumer-k8s-app:erick-0.1.1
+
+
+--- #Node Service for app-k8s
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-app
+  namespace: development
+spec:
+  type: NodePort
+  selector:
+    app: app-k8s
+  ports:
+    - protocol: TCP
+      nodePort: 30000
+      port: 8000
+      targetPort: 8000
+

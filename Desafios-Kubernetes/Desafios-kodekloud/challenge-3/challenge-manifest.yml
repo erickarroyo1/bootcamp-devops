@@ -1,0 +1,202 @@
+
+--- # vote deployment 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote-deployment
+  namespace: vote
+spec:
+  selector:
+    matchLabels:
+      app: vote-deployment
+  template:
+    metadata:
+      labels:
+        app: vote-deployment
+    spec:
+      containers:
+      - name: vote-deployment
+        image: kodekloud/examplevotingapp_vote:before
+        #resources:
+        #  limits:
+        #    memory: "128Mi"
+        #    cpu: "500m"
+        #ports:
+        #- containerPort: <Port>
+
+--- # vote-service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: vote-service
+  namespace: vote
+spec:
+  type: NodePort
+  selector:
+    app: vote-deployment
+  ports:
+    - protocol: TCP
+      nodePort: 31000
+      port: 5000
+      targetPort: 80
+
+--- # redis deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  namespace: vote
+spec:
+  selector:
+    matchLabels:
+      app: redis-deployment
+  template:
+    metadata:
+      labels:
+        app: redis-deployment
+    spec:
+      containers:
+      - name: redis-deployment
+        image: redis:alpine
+        volumeMounts:
+       —mountPath: /data
+          name: redis-data
+      volumes:
+       —name: redis-data
+          emptyDir: {}    
+        #resources:
+        #  limits:
+        #    memory: "128Mi"
+        #    cpu: "500m"
+        #ports:
+        #- containerPort: <Port>
+
+
+--- # redis-service
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: vote
+spec:
+  type: ClusterIP
+  selector:
+    app: redis-deployment
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+
+
+--- # worker deployment
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: vote
+spec:
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+      - name: worker
+        image: kodekloud/examplevotingapp_worker
+        #resources:
+        #  limits:
+        #    memory: "128Mi"
+        #    cpu: "500m"
+        #ports:
+        #- containerPort: <Port>
+
+
+--- # db deployment
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-deployment
+  namespace: vote
+spec:
+  selector:
+    matchLabels:
+      app: db-deployment
+  template:
+    metadata:
+      labels:
+        app: db-deployment
+    spec:
+        containers:
+            - name: db-deployment
+            image: postgres:9.4
+            env:
+            - name: POSTGRES_HOST_AUTH_METHOD
+            value: "trust"
+
+--- # db-service
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: vote
+spec:
+  type: ClusterIP
+  selector:
+    app: db-deployment
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+
+
+
+--- # result deployment
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: result-deployment
+  namespace: vote
+spec:
+  selector:
+    matchLabels:
+      app: result-deployment
+  template:
+    metadata:
+      labels:
+        app: result-deployment
+    spec:
+        containers:
+            - name: db-deployment
+            image: kodekloud/examplevotingapp_result:before
+
+
+--- # result-service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: result-service
+  namespace: vote
+spec:
+  type: NodePort
+  selector:
+    app: result-deployment
+  ports:
+    - protocol: TCP
+      nodePort: 31001
+      port: 5001
+      targetPort: 80

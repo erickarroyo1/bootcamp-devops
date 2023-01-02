@@ -1,0 +1,73 @@
+--- #PVC data-pvc
+
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-pvc
+  #namespace: development
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeName: data-pv
+  resources:
+    requests:
+      storage: 1Gi  
+ 
+  
+--- #PVC data-pv
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/web"
+
+--- #Node Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gop-fs-service
+  labels:
+    app: gop-fs-service  
+  #namespace: development
+spec:
+  selector:
+    run: gop-fileserver
+  ports:
+    - name: 8080-8080
+      protocol: TCP
+      nodePort: 30010
+      port: 8080
+      targetPort: 8080
+  type: NodePort #acceso Privado hacia el cluster
+
+
+--- #POD
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: gop-fileserver
+  #namespace: development
+  labels:
+    run: gop-fileserver
+spec:
+  containers:
+    - name: gop-fileserver
+      image: kodekloud/fileserver
+      volumeMounts:
+        - mountPath: /web
+          name: data-store
+  volumes:
+    - name: data-store
+      persistentVolumeClaim:
+        claimName: data-pvc
+
+

@@ -1,6 +1,4 @@
-
 --- # vote deployment 
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,17 +14,12 @@ spec:
         app: vote-deployment
     spec:
       containers:
-      - name: vote-deployment
+      - name: votemyapp-deployment
         image: kodekloud/examplevotingapp_vote:before
-        #resources:
-        #  limits:
-        #    memory: "128Mi"
-        #    cpu: "500m"
-        #ports:
-        #- containerPort: <Port>
 
---- # vote-service
 
+
+--- #Vote Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -50,6 +43,10 @@ metadata:
   name: redis-deployment
   namespace: vote
 spec:
+  revisionHistoryLimit: 5 #default 10
+  strategy:
+    type: RollingUpdate #default Recreate
+  replicas: 1
   selector:
     matchLabels:
       app: redis-deployment
@@ -84,7 +81,7 @@ metadata:
   name: redis
   namespace: vote
 spec:
-  type: ClusterIP
+  type: ClusterIP #acceso privado solamente entre el cluster.
   selector:
     app: redis-deployment
   ports:
@@ -102,6 +99,10 @@ metadata:
   name: worker
   namespace: vote
 spec:
+  revisionHistoryLimit: 5 #default 10
+  strategy:
+    type: RollingUpdate #default Recreate
+  replicas: 1
   selector:
     matchLabels:
       app: worker
@@ -166,11 +167,15 @@ spec:
 --- # result deployment
 
 apiVersion: v1
-kind: Pod
+kind: Deployment
 metadata:
   name: result-deployment
   namespace: vote
 spec:
+  revisionHistoryLimit: 5 #default 10
+  strategy:
+    type: RollingUpdate #default Recreate
+  replicas: 2
   selector:
     matchLabels:
       app: result-deployment

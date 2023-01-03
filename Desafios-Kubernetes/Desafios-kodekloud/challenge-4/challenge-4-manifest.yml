@@ -134,8 +134,6 @@
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
-  #      initContainers:
-  #        command:  ["/conf/update-node.sh", "redis-server", "/conf/redis.conf"]
           volumeMounts:
           - name: conf
             mountPath: /conf

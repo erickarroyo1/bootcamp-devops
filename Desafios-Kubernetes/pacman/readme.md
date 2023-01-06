@@ -12,7 +12,7 @@ kubectl get po -A
 
 ## History commands
 
-
+```
 aws configure 
 aws s3 ls
 aws sts get-caller-identity
@@ -94,7 +94,7 @@ kubectl apply -f app/ingressapp.yml
 k get ingress -n grupo3
 k logs  pacman-deployment-6c596c8d9f-64c8l -n grupo3
 kubectl exec -it mongo-64d4b45c65-lsjqt -n grupo3 -- bash
-
+```
 
 ### Evidencias:
 

@@ -137,7 +137,7 @@ kubectl exec -it mongo-64d4b45c65-lsjqt -n grupo3 -- bash
 ![Diagrama](./docs/logs-app-pacman-insert-to-mongo.png)
 
 - Registros en la BD mongo (se registra una vez se pierde en el juego y graba el record dentro del historico)
-- 
+  
 ![Diagrama](./docs/mongo-db-reg.png)
 
 

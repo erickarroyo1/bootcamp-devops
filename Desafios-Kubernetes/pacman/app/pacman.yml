@@ -1,0 +1,52 @@
+
+--- # pacman deployment 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pacman-deployment
+  namespace: grupo3
+  labels:
+    app: pacman-deployment
+spec:
+  revisionHistoryLimit: 5 #default 10
+  strategy:
+    type: RollingUpdate #default Recreate
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pacman-deployment
+  template:
+    metadata:
+      labels:
+        app: pacman-deployment
+    spec:
+      containers:
+      - name: pacman-deployment
+        image: roxsross12/pacman:1.0.1
+        env:
+        - name: MONGO_SERVICE_HOST
+          value: mongo
+        - name: MONGO_AUTH_USER
+          value: app_user
+        - name: MONGO_AUTH_PWD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: MONGO_AUTH_PWD
+        - name: MONGODB_DATABASE
+          value: pacman
+        - name: MY_MONGO_PORT
+          value: "27017"
+        - name: MONGO_USE_SSL
+          value: "false"
+        - name: MONGO_VALIDATE_SSL
+          value: "false"
+        - name: MY_NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName  
+        ports:
+        - containerPort: 8080
+

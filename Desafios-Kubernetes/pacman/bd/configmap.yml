@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-init-cm
+  namespace: grupo3
+data:
+  mongo-init.sh: |
+    echo "Creating curator user..."
+    echo '
+        use '${MONGODB_DATABASE}'
+        db.createUser(
+            {
+                user: "'${MONGODB_USER}'",
+                pwd: "'${MONGODB_PASSWORD}'",
+                roles: [ "readWrite" ]
+            }
+        )
+        exit' | mongo

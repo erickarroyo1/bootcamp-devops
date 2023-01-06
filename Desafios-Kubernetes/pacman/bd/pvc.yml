@@ -1,0 +1,16 @@
+--- # Volumen persistente
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-storage
+  namespace: grupo3
+  labels:
+    app: grupo3
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: local-storage
+  resources:
+    requests:
+      storage: 1Gi

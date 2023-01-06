@@ -77,7 +77,7 @@ kubectl apply -f app/serviceapp.yml
 kubectl apply -f app/pacman.yml
 k  logs pacman-deployment-6c596c8d9f-64c8l -n grupo3
 
-test  docker image locally
+::::test docker image locally::::
 
 docker run -d -p 8080:5000 --name pacman roxsross12/pacman:1.0.1
 docker ps
@@ -87,7 +87,7 @@ docker exec -it 9f558dd99f6e sh
 docker rm -f 9f558dd99f6e
 docker ps
 
-continue with kubernetes
+::::continue with kubernetes::::
 
 k exec -it pacman-deployment-6c596c8d9f-64c8l -n grupo3 -- sh
 kubectl apply -f app/ingressapp.yml
@@ -99,34 +99,45 @@ kubectl exec -it mongo-64d4b45c65-lsjqt -n grupo3 -- bash
 ### Evidencias:
 
 - Verificacion-pvc
+  
+  
 ![Diagrama](./docs/Verificacion-pvc.png)
 
 - Verificacion-deployment-app
+  
 ![Diagrama](./docs/verificacion-deployment-app.png)
 
 - Verificacion-deployment-mongo
+  
 ![Diagrama](./docs/verificacion-deployment-mongo.png)
 
 - Variables-mongodb1
+  
 ![Diagrama](./docs/variables-micro-mongodb.png)
 
 - Variables-mongodb2
+
 ![Diagrama](./docs/variables-mongo-db-2.png)
 
 - MongoDB funcionando
+  
 ![Diagrama](./docs/funcionamiento-mongodb-inside-container.png)
 
 - App Funcionando
+  
 ![Diagrama](./docs/app-funcionando.png)
 
 
 - App historicos Web 
+  
 ![Diagrama](./docs/historico-records-web.png)
 
 - App insertando datos en la mongoDB
+  
 ![Diagrama](./docs/logs-app-pacman-insert-to-mongo.png)
 
 - Registros en la BD mongo (se registra una vez se pierde en el juego y graba el record dentro del historico)
+- 
 ![Diagrama](./docs/mongo-db-reg.png)
 
 

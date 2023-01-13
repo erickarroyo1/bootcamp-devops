@@ -1,11 +1,11 @@
 variable "access_key" {
   type    = string
-  default = "AKIAWMQQFKAMQ7DIXF6N"
+  default = ""
 }
 
 variable "secret_key" {
   type    = string
-  default = "4NcucSDTOYU2Z3CbOpxntuDlBGv2cbfeLH9khn8P"
+  default = ""
 }
 
 variable "token" {

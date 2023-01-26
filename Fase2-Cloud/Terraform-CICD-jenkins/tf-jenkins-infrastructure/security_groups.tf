@@ -7,7 +7,7 @@ resource "aws_security_group" "public_allow" {
     from_port   = 22
     to_port     = 22
     protocol    = "6"
-    cidr_blocks = ["186.31.174.42/32"]
+    cidr_blocks = ["186.28.49.128/32"]
     description = "traffic from security administrators"
   }
 

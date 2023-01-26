@@ -23,36 +23,6 @@ resource "aws_network_interface_sg_attachment" "publicattachment" {
 // Instance Jenkins-Bootcamp
 
 
-resource "aws_iam_role" "role" {
-  name     = "ssm_role"
-  path     = "/"
-  assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-                "ssm:StartSession",
-                "ssm:TerminateSession",
-                "ssm:ResumeSession",
-                "ssm:DescribeSessions",
-                "ssm:GetConnectionStatus"
-            ],
-            "Effect": "Allow",
-            "Resource": [
-                "*"
-            ]
-        }
-    ]
-})
-
-  provider = aws.bootcamp-tlz-account
-}
-
-resource "aws_iam_instance_profile" "ec2_instance_profile" {
-  name     = "ec2_instance_profile"
-  role     = aws_iam_role.role.name
-  provider = aws.bootcamp-tlz-account
-}
 
 
 
@@ -61,7 +31,6 @@ resource "aws_instance" "jenkins" {
   instance_type        = var.size
   availability_zone    = var.az1
   key_name             = var.keyname
-  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
   user_data            = file("${var.bootstrap-jenkins}")
 
   root_block_device {

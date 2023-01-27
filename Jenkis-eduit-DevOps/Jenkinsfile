@@ -11,7 +11,7 @@ pipeline {
         stage('Init') {
             steps {
                 echo 'Stage Init'
-                sh 'rm -rf bootcamp-devops'
+                sh 'rm -rf bootcamp-devops/'
             }
         }
         stage('Test') {

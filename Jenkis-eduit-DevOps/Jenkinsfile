@@ -21,28 +21,28 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Stage Build'
-                sh 'docker build -t ${APPNAME}:${BUILD_NUMBER} -f Jenkis-eduit-DevOps/Dockerfile .'
-                sh 'docker tag ${APPNAME}:${BUILD_NUMBER} ${REGISTRY}/${APP_NAME}:${BUILD_NUMBER}'
+                sh 'sudo docker build -t ${APPNAME}:${BUILD_NUMBER} -f Jenkis-eduit-DevOps/Dockerfile .'
+                sh 'sudo docker tag ${APPNAME}:${BUILD_NUMBER} ${REGISTRY}/${APP_NAME}:${BUILD_NUMBER}'
             }
         }
         stage('Push to Registry') {
             steps {
                 echo 'Stage Push'
-                sh 'docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
-                sh 'docker push ${REGISTRY}/${APP_NAME}:${BUILD_NUMBER}'
+                sh 'sudo docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
+                sh 'sudo docker push ${REGISTRY}/${APP_NAME}:${BUILD_NUMBER}'
                 
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Stage Deploy'
-                sh ("sed -i -- 's/REGISTRY/$REGISTRY/g' Jenkis-eduit-DevOps/docker-compose.yml")
-                sh ("sed -i -- 's/APPNAME/$APPNAME/g' Jenkis-eduit-DevOps/docker-compose.yml")
-                sh ("sed -i -- 's/TAG/$BUILD_NUMBER/g' Jenkis-eduit-DevOps/docker-compose.yml")
+                sh ("sudo sed -i -- 's/REGISTRY/$REGISTRY/g' Jenkis-eduit-DevOps/docker-compose.yml")
+                sh ("sudo sed -i -- 's/APPNAME/$APPNAME/g' Jenkis-eduit-DevOps/docker-compose.yml")
+                sh ("sudo sed -i -- 's/TAG/$BUILD_NUMBER/g' Jenkis-eduit-DevOps/docker-compose.yml")
                 sshagent(['ssh-ec2']){
-                 sh 'scp -o StrictHostKeyChecking=no docker-compose.yml ${EC2INSTANCE}:/home/ec2-user' 
-                 sh 'ssh ${EC2INSTANCE} ls -lrt'
-                 sh 'ssh ${EC2INSTANCE} docker-compose up -d'
+                 sh 'sudo scp -o StrictHostKeyChecking=no docker-compose.yml ${EC2INSTANCE}:/home/ec2-user' 
+                 sh 'sudo ssh ${EC2INSTANCE} ls -lrt'
+                 sh 'sudo ssh ${EC2INSTANCE} docker-compose up -d'
                 }
             }
         }

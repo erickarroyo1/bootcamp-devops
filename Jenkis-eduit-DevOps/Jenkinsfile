@@ -8,13 +8,13 @@ pipeline {
     }
 
     stages {
-        stage('Init') {
+        stage('Git Clone') {
             steps {
-                echo 'Stage Init'
-                sh 'rm -rf bootcamp-devops/'
+                sh 'rm -rf bootcamp-devops'
                 sh 'git clone https://github.com/erickarroyo1/bootcamp-devops.git'
+                sh 'ls -lrt Fase2-Cloud/Terraform-CICD-jenkins/'
             }
-        }
+        } 
         stage('Test') {
             steps {
                 echo 'Stage Test'

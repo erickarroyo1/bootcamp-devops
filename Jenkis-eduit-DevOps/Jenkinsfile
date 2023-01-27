@@ -23,7 +23,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Stage Build'
-                sh 'sudo su -s'
                 sh 'docker build -t ${APPNAME}:${BUILD_NUMBER} -f Jenkis-eduit-DevOps/Dockerfile .'
                 sh 'docker tag ${APPNAME}:${BUILD_NUMBER} ${REGISTRY}/${APP_NAME}:${BUILD_NUMBER}'
             }

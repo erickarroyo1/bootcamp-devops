@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        EC2INSTANCE = 'ubuntu@ec2-54-216-200-230.eu-west-1.compute.amazonaws.com'
+        EC2INSTANCE = 'ec2-user@ec2-54-216-200-230.eu-west-1.compute.amazonaws.com'
         APPNAME = 'python-app-demo'
         REGISTRY = '191006'
         DOCKER_HUB_LOGIN = credentials('docker-hub')
